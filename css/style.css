@@ -51,11 +51,10 @@ table {
 .content {
   background: #fff;
   border-radius: 25px;
-  height: 500px;
+  height: 550px;
   width: 800px;
   position: relative;
-  display: flex;
-  justify-content: flex-end;
+  overflow: hidden;
 }
 
 .side-form {
@@ -69,24 +68,131 @@ table {
   justify-content: center;
   position: absolute;
   left: 0;
+  top: 0;
   z-index: 1;
+  overflow: hidden;
+}
+
+.login-text {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.register-text {
+  position: absolute;
+}
+
+@keyframes registerActive {
+  50% {
+    width: 100%;
+    border-radius: 25px;
+  }
+  
+  100% {
+    width: 50%;
+    left: auto;
+    right: 0;
+    border-radius: 30% 25px 25px 30%;
+  }
+}
+
+@keyframes registerSlideOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  100% {
+    position: absolute;
+    transform: translateX(-200%);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes registerSlideIn {
+  0% {
+    transform: translateX(200%);
+    opacity: 0;
+    pointer-events: auto;
+  }
+  
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@keyframes loginActive {
+  0% {
+    width: 50%;
+    left: auto;
+    right: 0;
+    border-radius: 30% 25px 25px 30%;
+  }
+  
+  50% {
+    width: 100%;
+    border-radius: 25px;
+  }
+  
+  100% {
+    width: 50%;
+    right: auto;
+    left: 0;
+    border-radius: 25px 30% 30% 25px;
+  }
+}
+
+@keyframes loginSlideOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  100% {
+    transform: translateX(200%);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes loginSlideIn {
+  0% {
+    transform: translateX(-200%);
+    opacity: 0;
+  }
+  
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .register-text h1,
-.register-text p {
+.register-text p,
+.login-text h1,
+.login-text p {
   color: #fff;
   margin: 10px;
 }
 
-.register-text h1 {
+.register-text h1,
+.login-text h1 {
   font-size: 38px;
 }
 
-.register-text p {
+.register-text p,
+.login-text p {
   font-size: 12px;
 }
 
-.register-text button {
+.register-text button,
+.login-text button {
   color: #fff;
   border: 1px solid #fff;
   padding: 10px 40px;
@@ -95,28 +201,34 @@ table {
 }
 
 .content form {
-  width: 50%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  overflow: hidden;
 }
 
-.form-content h1,
-.form-content p {
+.form-content.login h1,
+.form-content.login p,
+.form-content.register h1, 
+.form-content.register p {
   text-align: center;
 }
 
-.form-content p {
+.form-content.login p,
+.form-content.register p {
   font-size: 14px;
+  margin: 5px 0;
 }
 
-.form-group {
-  margin: 22px 0;
+.form-content.login .form-group,
+.form-content.register .form-group {
+  margin: 18px 0;
   position: relative;
 }
 
-.form-group label {
+.form-content.login .form-group label,
+.form-content.register .form-group label {
   position: absolute;
   right: 0;
   min-height: 100%;
@@ -125,12 +237,14 @@ table {
   align-items: center;
 }
 
-.form-group label i {
+.form-content.login .form-group label i,
+.form-content.register .form-group label i {
   color: #333;
   font-size: 20px;
 }
 
-.form-group input {
+.form-content.login .form-group input,
+.form-content.register .form-group input {
   width: 300px;
   font-size: 16px;
   padding: 10px 15px;
@@ -140,7 +254,8 @@ table {
   background: rgba(220, 226, 238, 0.69);
 }
 
-.login {
+.form-content.login .login,
+.form-content.register .sign-up {
   width: 100%;
   background: #3381ff;
   border-radius: 5px;
@@ -150,32 +265,32 @@ table {
   cursor: pointer;
   border: none;
   outline: none;
-  margin: 15px 0;
+  margin: 5px 0;
 }
 
-.third-party {
+.form-content.login .third-party,
+.form-content.register .third-party {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 15px 0;
 }
 
-.third-party button {
+.form-content.login .third-party button,
+.form-content.register .third-party button {
   margin: 5px 10px;
   padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-
   border-radius: 5px;
-
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
 
-.third-party button i {
+.form-content.login .third-party button i,
+.form-content.register .third-party button i {
   font-size: 20px;
 }
-
 /* breakpoints */
 @media screen and (max-width: 850px) {
   .content {
@@ -192,36 +307,69 @@ table {
 
   .side-form {
     width: 100%;
+    height: 50%;
     position: relative;
     border-radius: 25px 25px 0 0;
     padding: 30px;
+    top: auto;
+  }
+  
+  .register-text {
+    position: static;
   }
 
   .content form {
     width: 100%;
     padding: 30px 0 10px;
+    flex-direction: column;
   }
-
-  .form-group input {
+  
+  .form-content.register {
+    display: none;
   }
+  
+  .form-content.register.active {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .register-text.active {
+    display: none;
+  }
+  
+  .login-text.active {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+  }
+    
+  .form-content.login.active {
+    display: none;
+  }
+    
 }
 
 @media screen and (max-width: 480px) {
-  .register-text h1 {
+  .register-text h1,
+  .login-text h1 {
     font-size: 30px;
   }
 }
 
 @media screen and (max-width: 375px) {
-  .form-group input {
+  .form-content.login .form-group input,
+  .form-content.register .form-group input{
     width: 250px;
   }
 
-  .register-text h1 {
+  .register-text h1,
+  .login-text h1 {
     font-size: 24px;
   }
 
-  .register-text p {
+  .register-text p,
+  .login-text p {
     font-size: 11px;
   }
 }
