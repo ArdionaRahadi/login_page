@@ -53,21 +53,23 @@ table {
 .content {
   background: #fff;
   border-radius: 25px;
-  height: 530px;
   width: 800px;
   position: relative;
+  height: auto;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-around;
+  align-items: center;
   overflow: hidden;
 }
 
-.content form {
+.content .form-register,
+.content .form-login {
   height: 100%;
+  padding: 30px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* overflow: hidden; */
 }
 
 .form-content-login h1,
@@ -351,8 +353,10 @@ table {
 @media screen and (max-width: 750px) {
   .content {
     width: 90%;
-    height: auto;
+    height: 100%;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .form-side {
@@ -362,10 +366,18 @@ table {
     padding: 30px;
   }
 
-  .content form {
+  .content .form-login, 
+  .content .form-register {
     width: 100%;
     padding: 35px 0 10px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content .form-register {
+    
   }
 
   .form-content-register {
@@ -374,6 +386,10 @@ table {
     bottom: 0;
     pointer-events: none;
     z-index: 1;
+  }
+  
+  .form-content-login .form-group {
+    position: relative;
   }
 
   .register-content {
